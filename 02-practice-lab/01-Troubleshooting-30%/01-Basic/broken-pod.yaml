@@ -32,7 +32,7 @@ spec:
         memory: "64Mi"
         cpu: "250m"
       limits:
-        memory: "32Mi"             # BUG 3: limit LESS than request - invalid
+        memory: "128Mi"             # BUG 3: limit LESS than request - invalid
         cpu: "500m"
     readinessProbe:
       httpGet:
