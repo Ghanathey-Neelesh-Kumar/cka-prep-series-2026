@@ -1,0 +1,42 @@
+# CKA CRACKED - Episode 01
+# This manifest is INTENTIONALLY BROKEN.
+# Your job: Find all the issues and fix them.
+#
+# Apply with: kubectl apply -f broken-pod.yaml
+# Then run:   kubectl get pods -n cka-ep01
+# Good luck!
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cka-ep01
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-app
+  namespace: cka-ep01
+  labels:
+    app: web-app
+spec:
+  containers:
+  - name: web-app
+    image: nginx:1.99.99           # BUG 1: This image tag does not exist
+    ports:
+    - containerPort: 80
+    command: ["/bin/sh"]
+    args: ["-c", "nginx; sleep 1"] # BUG 2: nginx exits immediately - wrong command
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "32Mi"             # BUG 3: limit LESS than request - invalid
+        cpu: "500m"
+    readinessProbe:
+      httpGet:
+        path: /healthz             # BUG 4: path does not exist on nginx
+        port: 8080                 # BUG 5: wrong port, nginx serves on 80
+      initialDelaySeconds: 2
+      periodSeconds: 5

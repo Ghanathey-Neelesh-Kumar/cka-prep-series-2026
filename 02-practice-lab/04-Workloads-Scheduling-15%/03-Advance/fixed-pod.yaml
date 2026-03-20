@@ -1,0 +1,37 @@
+# CKA CRACKED - Episode 01 - SOLUTION
+# All 5 bugs have been fixed. See comments below.
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cka-ep01
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-app
+  namespace: cka-ep01
+  labels:
+    app: web-app
+spec:
+  containers:
+  - name: web-app
+    image: nginx:1.25.3            # FIX 1: Use a valid, stable nginx image tag
+    ports:
+    - containerPort: 80
+                                   # FIX 2: Removed the bad command/args block
+                                   # nginx's default CMD runs it in foreground correctly
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"            # FIX 3: limit must be >= request
+        cpu: "500m"
+    readinessProbe:
+      httpGet:
+        path: /                    # FIX 4: nginx serves content at / by default
+        port: 80                   # FIX 5: correct port for nginx
+      initialDelaySeconds: 5
+      periodSeconds: 10
