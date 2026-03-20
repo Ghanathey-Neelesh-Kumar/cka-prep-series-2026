@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🔥 CKA 2026 Series
+# 🔥 CKA PREP SERIES 2026 
 ### The Most Hands-On CKA Preparation Repository on GitHub
 
 **Stop reading. Start breaking things. Start fixing them.**
